@@ -28,12 +28,11 @@ def get_url_list(url):
     response = requests.get(url, timeout=100)
     response_list = [i for i in response.text.split("\n") if "href" in i]
     for i in response_list:
-        # prefix = i[i.find("href")+6:i.find("href")+10]
+        # prefix = i[i.find("href")+6:i.find("href")+10] (if file addresses are also considered)
         prefix = "http"
         r = tokenizer(i, prefix, '"')
         for j in r:
             lst.append(j[:-1])
-    print(lst)
     return lst
 
 
@@ -41,6 +40,7 @@ def infix_to_postfix(infix_expression: str):
     """
     converts and returns the infix expression to postfix
     """
+    # Inputs should be given with spaces between different elements
     precd = {"^": 3, "*": 2, "/": 2, "+": 1, "-": 1, "(": 0, ")": 0}
     result = []
     stack = []
@@ -65,10 +65,9 @@ def infix_to_postfix(infix_expression: str):
                 stack.append(i)
     while stack:
         result.append(stack.pop())
-    print(result)
     return result
 
 
 # infix_to_postfix("a + b * ( c + d ) ")
-# print(tokenizer('arrarrarararara', 'r', 'a'))
+# print(tokenizer('arrarrarararara', '', 'arr'))
 # get_url_list("https://httpbin.org/")
